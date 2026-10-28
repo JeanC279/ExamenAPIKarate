@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <groupId>org.example</groupId>
+    <artifactId>Karate</artifactId>
+    <version>1.0-SNAPSHOT</version>
+    <name>Examen Practico - Karate API</name>
+
+    <properties>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <!-- Karate 1.5.2 requiere JDK 17 o posterior. Se recomienda JDK 21 LTS. -->
+        <maven.compiler.release>17</maven.compiler.release>
+        <karate.version>1.5.2</karate.version>
+    </properties>
+
+    <dependencies>
+        <!-- Karate 1.5.2: evita el fallo de GraalVM de Karate 1.2.0 con JDK moderno.
+             Incluye Karate Core, JUnit 5 y Logback transitive, sin versiones incompatibles. -->
+        <dependency>
+            <groupId>io.karatelabs</groupId>
+            <artifactId>karate-junit5</artifactId>
+            <version>${karate.version}</version>
+            <scope>test</scope>
+        </dependency>
+    </dependencies>
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <version>3.13.0</version>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-surefire-plugin</artifactId>
+                <version>3.2.5</version>
+                <configuration>
+                    <!-- Un solo runner, que procesa los 5 escenarios de Regresion.feature. -->
+                    <includes>
+                        <include>**/*Test.java</include>
+                    </includes>
+                    <printSummary>true</printSummary>
+                    <redirectTestOutputToFile>false</redirectTestOutputToFile>
+                    <trimStackTrace>false</trimStackTrace>
+                    <useFile>false</useFile>
+                    <systemPropertyVariables>
+                        <file.encoding>UTF-8</file.encoding>
+                    </systemPropertyVariables>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
+</project>
